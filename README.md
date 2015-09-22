@@ -1,4 +1,5 @@
 # BleComm
+A Simple iOS BLE Communication Library as CocoaPod
 
 [![CI Status](http://img.shields.io/travis/Saravana Perumal Shanmugam/BleComm.svg?style=flat)](https://travis-ci.org/Saravana Perumal Shanmugam/BleComm)
 [![Version](https://img.shields.io/cocoapods/v/BleComm.svg?style=flat)](http://cocoapods.org/pods/BleComm)
