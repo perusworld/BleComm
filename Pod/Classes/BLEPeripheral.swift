@@ -2,10 +2,9 @@ import Foundation
 import CoreBluetooth
 
 public protocol BLEPeripheralDelegate: Any {
-    
     func didReceiveData(newData:NSData)
     func connectionFinalized()
-    func uartDidEncounterError(error:NSString)
+    func didEncounterError(error:NSString)
     func serviceUUID() -> CBUUID
     func txUUID() -> CBUUID
     func rxUUID() -> CBUUID
@@ -23,9 +22,7 @@ public class BLEPeripheral: NSObject, CBPeripheralDelegate {
     var logger:Logger!
     
     init(peripheral:CBPeripheral, delegate:BLEPeripheralDelegate, logger:Logger?=DefaultLogger()){
-        
         super.init()
-        
         self.currentPeripheral = peripheral
         self.currentPeripheral.delegate = self
         self.delegate = delegate
@@ -34,7 +31,6 @@ public class BLEPeripheral: NSObject, CBPeripheralDelegate {
     
     
     func didConnect() {
-        
         if currentPeripheral.services != nil{
             logger.printLog(self, funcName: "didConnect", "Skipping service discovery")
             peripheral(currentPeripheral, didDiscoverServices: nil)
@@ -53,7 +49,6 @@ public class BLEPeripheral: NSObject, CBPeripheralDelegate {
     
     
     func writeRawData(data:NSData) {
-        
         if (txCharacteristic == nil){
             logger.printLog(self, funcName: "writeRawData", "Unable to write data without txcharacteristic")
             return
@@ -241,7 +236,6 @@ public class BLEPeripheral: NSObject, CBPeripheralDelegate {
         logger.printLog(self, funcName: "didDiscoverIncludedServicesForService", "service: \(service.description) has \(service.includedServices!.count) included services")
         
         for s in (service.includedServices! as [CBService]) {
-            
             logger.printLog(self, funcName: "didDiscoverIncludedServicesForService", "\(s.description)")
         }
         
@@ -253,7 +247,7 @@ public class BLEPeripheral: NSObject, CBPeripheralDelegate {
         logger.printLog(self, funcName: "Error", "\(errorString)")
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.delegate.uartDidEncounterError(errorString)
+            self.delegate.didEncounterError(errorString)
         })
         
     }

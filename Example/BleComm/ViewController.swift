@@ -10,7 +10,7 @@ import UIKit
 import CoreBluetooth
 import BleComm
 
-class ViewController: UIViewController, Logger, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, Logger, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var txtMsg: UITextField!
     @IBOutlet weak var btnConnect: UIButton!
@@ -39,13 +39,20 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
             },
             onData: {
                 (data:NSData?, string:String?)->() in
-                self.printLog("\(string) - \(data)")
+                self.printLog(string!)
             },
             logger: self
         )
+        txtMsg.delegate = self
     }
 
     @IBAction func connectDisconnect(sender: UIButton) {
+        if ("Disconnect" == sender.titleLabel!.text) {
+            self.printLog("Going to disconnect");
+            bleComm!.disconnect();
+        } else {
+            self.printLog("Going to connect");
+        }
     }
     
     @IBAction func sendMessage(sender: UIButton) {
@@ -98,5 +105,11 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
         cell.textLabel?.text = logs[row]
         return cell
     }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }
 

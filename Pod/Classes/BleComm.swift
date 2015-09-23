@@ -46,8 +46,8 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
     }
     
     
-    public func uartDidEncounterError(error: NSString) {
-        logger.printLog(self, funcName: "uartDidEncounterError", error as String)
+    public func didEncounterError(error: NSString) {
+        logger.printLog(self, funcName: "didEncounterError", error as String)
         
     }
     
@@ -136,4 +136,10 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
             currentPeripheral = nil
         }
     }
+    
+    public func disconnect() {
+        centralManager!.cancelPeripheralConnection((currentPeripheral?.currentPeripheral)!)
+    }
+    
+    
 }
