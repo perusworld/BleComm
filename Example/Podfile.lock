@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  BleComm: 6702574d7e1249121ec0d3a20e2c76ee8f5ef4b4
+  BleComm: 0b7f711dff96c9d25a376228ddc7aceca63bede8
 
 COCOAPODS: 0.38.2
