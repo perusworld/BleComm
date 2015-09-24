@@ -139,27 +139,11 @@ extension CBUUID {
 
 public protocol Logger {
     
-    func printLog(obj:AnyObject, funcName:String)
-
-    func printLog(obj:AnyObject, funcName:String, _ logString:String)
-
     func printLog(logString:String)
 }
 
 
 public class DefaultLogger : Logger {
-    
-    public func printLog(obj:AnyObject, funcName:String) {
-        
-        print("\(obj.classForCoder?.description()) \(funcName)")
-        
-    }
-    
-    public func printLog(obj:AnyObject, funcName:String, _ logString:String="") {
-        
-        print("\(obj.classForCoder?.description()) \(funcName) : \(logString)")
-        
-    }
     
     public func printLog(logString:String) {
         print(logString)

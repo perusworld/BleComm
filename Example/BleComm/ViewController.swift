@@ -19,6 +19,8 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
     var bleComm:  BLEComm?
     var logs:Array = [String]()
     
+    var deviceId : NSUUID!
+    
     let textCellIdentifier = "TextCell"
 
     override func viewDidLoad() {
@@ -26,6 +28,7 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
         tblLogs.delegate = self
         tblLogs.dataSource = self
         bleComm = BLEComm (
+            deviceId : deviceId,
             serviceUUID: vendingServiceUUID(),
             txUUID: txCharacteristicsUUID(),
             rxUUID: rxCharacteristicsUUID(),
@@ -44,6 +47,10 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
             logger: self
         )
         txtMsg.delegate = self
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        bleComm!.disconnect()
     }
 
     @IBAction func connectDisconnect(sender: UIButton) {

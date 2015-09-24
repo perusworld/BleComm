@@ -16,6 +16,7 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
     var rUUID:CBUUID!
     var mxSize:Int!
     var logger:Logger!
+    var deviceId: NSUUID!
     
     var connectionCallback:(()->())?
     var disconnectionCallback:(()->())?
@@ -35,19 +36,19 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
     }
     
     public func didReceiveData(newData: NSData) {
-        logger.printLog(self, funcName: "didReceiveData", "\(newData.stringRepresentation())")
+        logger.printLog("didReceiveData \(newData.stringRepresentation())")
         let string = NSString(data: newData, encoding:NSUTF8StringEncoding)
         dataCallback?(data: newData, string: string! as String)
     }
     
     public func connectionFinalized() {
-        logger.printLog(self, funcName: "connectionFinalized")
+        logger.printLog("connectionFinalized")
         connectionStatus = .Connected
     }
     
     
     public func didEncounterError(error: NSString) {
-        logger.printLog(self, funcName: "didEncounterError", error as String)
+        logger.printLog( "didEncounterError \(error as String)")
         
     }
     
@@ -90,8 +91,9 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
         return false
     }
     
-    public init(serviceUUID:CBUUID, txUUID:CBUUID, rxUUID:CBUUID, onConnect connectionCallback:(()->())? = nil, onDisconnect disconnectionCallback:(()->())? = nil, onData dataCallback:((data:NSData?, string:String?)->())? = nil, mxSize:Int?=512, logger:Logger?=DefaultLogger()) {
+    public init(deviceId: NSUUID, serviceUUID:CBUUID, txUUID:CBUUID, rxUUID:CBUUID, onConnect connectionCallback:(()->())? = nil, onDisconnect disconnectionCallback:(()->())? = nil, onData dataCallback:((data:NSData?, string:String?)->())? = nil, mxSize:Int?=512, logger:Logger?=DefaultLogger()) {
         super.init()
+        self.deviceId = deviceId
         self.sUUID = serviceUUID
         self.tUUID = txUUID
         self.rUUID = rxUUID
@@ -105,31 +107,46 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
     
     public func centralManagerDidUpdateState(central: CBCentralManager) {
         if central.state == .PoweredOn {
+            if (nil != deviceId) {
+                for pher:AnyObject in central.retrievePeripheralsWithIdentifiers([deviceId]) {
+                    if pher is CBPeripheral {
+                        connectDevice(pher as! CBPeripheral)
+                        return
+                    }
+                }
+            }
             central.scanForPeripheralsWithServices([serviceUUID()], options: nil)
-            logger.printLog(self, funcName: "Searching for BLE Devices")
+            logger.printLog("Searching for BLE Devices")
         } else if central.state == .PoweredOff {
-            logger.printLog(self, funcName: "Powered off")
+            logger.printLog("Powered off")
             connectionStatus = ConnectionStatus.Disconnected
         }
     }
     
-    public func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
-        
-        centralManager!.stopScan()
+    public func connectDevice(peripheral: CBPeripheral)
+    {
         if peripheral.state == CBPeripheralState.Connected || peripheral.state == CBPeripheralState.Connecting {
             centralManager!.cancelPeripheralConnection(peripheral)
         }
         currentPeripheral = BLEPeripheral(peripheral: peripheral, delegate: self, logger: logger)
         centralManager!.connectPeripheral(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(bool:true)])
+        
+    }
+    
+    public func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
+        
+        centralManager!.stopScan()
+        
+        connectDevice(peripheral)
     }
     
     public func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
-        logger.printLog(self, funcName: "Discovering peripheral services")
+        logger.printLog("Discovering peripheral services")
         currentPeripheral?.didConnect()
     }
     
     public func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
-        logger.printLog(self, funcName: "Peripheral Disconnected:" , "\(peripheral.name)")
+        logger.printLog("Peripheral Disconnected: \(peripheral.name)")
         
         if currentPeripheral?.currentPeripheral == peripheral {
             connectionStatus = ConnectionStatus.Disconnected
