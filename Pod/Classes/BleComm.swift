@@ -155,7 +155,9 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
     }
     
     public func disconnect() {
-        centralManager!.cancelPeripheralConnection((currentPeripheral?.currentPeripheral)!)
+        if (ConnectionStatus.Connected == connectionStatus) {
+            centralManager!.cancelPeripheralConnection((currentPeripheral?.currentPeripheral)!)
+        }
     }
     
     
