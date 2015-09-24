@@ -9,12 +9,10 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
-BleComm is not yet available through [CocoaPods](http://cocoapods.org). 
-
-To install, add the following line to your Podfile:
+BleComm is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:
 
 ```ruby
-pod "BleComm", :git => 'https://github.com/perusworld/BleComm.git'
+pod "BleComm"
 ```
 
 ## Author
