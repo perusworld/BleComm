@@ -17,7 +17,7 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
     @IBOutlet weak var tblLogs: UITableView!
     
     var bleComm:  BLEComm?
-    var logs:Array = [String]()
+    var logs = [String]()
     
     var deviceId : NSUUID!
     

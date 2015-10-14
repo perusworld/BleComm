@@ -145,6 +145,10 @@ public protocol Logger {
 
 public class DefaultLogger : Logger {
     
+    public init() {
+        
+    }
+    
     public func printLog(logString:String) {
         print(logString)
     }
