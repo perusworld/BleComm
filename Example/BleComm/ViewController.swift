@@ -29,7 +29,7 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
         tblLogs.dataSource = self
         bleComm = BLEComm (
             deviceId : deviceId,
-            serviceUUID: vendingServiceUUID(),
+            serviceUUID: demoServiceUUID(),
             txUUID: txCharacteristicsUUID(),
             rxUUID: rxCharacteristicsUUID(),
             onConnect:{
@@ -71,16 +71,16 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
         // Dispose of any resources that can be recreated.
     }
 
-    func vendingServiceUUID() -> CBUUID {
-        return CBUUID(string:"00000000-0000-1000-8000-00805F9B34FB")
+    func demoServiceUUID() -> CBUUID {
+        return CBUUID(string:"fff0")
     }
     
     func txCharacteristicsUUID() -> CBUUID {
-        return CBUUID(string:"00000001-0000-1000-8000-00805F9B34FB")
+        return CBUUID(string:"fff1")
     }
     
     func rxCharacteristicsUUID() -> CBUUID {
-        return CBUUID(string:"00000002-0000-1000-8000-00805F9B34FB")
+        return CBUUID(string:"fff2")
     }
 
     func printLog(obj:AnyObject, funcName:String) {

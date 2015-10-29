@@ -19,7 +19,7 @@ class BLETableViewController: UITableViewController {
         names = []
         tblEntries.reloadData()
         bleScan = BLEScan (
-            serviceUUID: vendingServiceUUID(),
+            serviceUUID: demoServiceUUID(),
             onScanDone: {
                 (pheripherals:[String:NSUUID]?)->() in
                 for(name, id) in pheripherals! {
@@ -43,8 +43,8 @@ class BLETableViewController: UITableViewController {
         return entries.count
     }
     
-    func vendingServiceUUID() -> CBUUID {
-        return CBUUID(string:"00000000-0000-1000-8000-00805F9B34FB")
+    func demoServiceUUID() -> CBUUID {
+        return CBUUID(string:"fff0")
     }
 
 
