@@ -14,6 +14,8 @@ BleComm is available through [CocoaPods](http://cocoapods.org). To install it, s
 ```ruby
 pod "BleComm"
 ```
+## Node.js implementation
+Looking to do communications betweeen your iOS app and your Node.js application running on say Raspberry PI, use [nodeblecomm](https://github.com/perusworld/nodeblecomm)
 
 ## Author
 
