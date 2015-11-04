@@ -359,9 +359,9 @@ public class ProtocolBLEPeripheral: SimpleBLEPeripheral {
             var toIndex = 0
             var dataMarker = self.ChunkedData
             for (var index = 0; index < string.length; index = index + self.dataLength) {
-                var data:NSMutableData = NSMutableData()
+                let data:NSMutableData = NSMutableData()
                 toIndex = min(index + self.dataLength, string.length)
-                var chunk = string.substringWithRange(NSRange(location:index, length:toIndex-index)) as NSString
+                let chunk = string.substringWithRange(NSRange(location:index, length:toIndex-index)) as NSString
                 dataMarker = (index == 0) ? self.ChunkedDataStart : (toIndex == string.length ? self.ChunkedDataEnd : self.ChunkedData)
                 data.appendBytes([dataMarker] as [UInt8], length: 1)
                 data.appendData(NSData(bytes: chunk.UTF8String, length: chunk.length))
