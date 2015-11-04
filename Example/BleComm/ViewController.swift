@@ -41,10 +41,10 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
                 self.btnConnect.setTitle("Connect", forState: UIControlState.Normal);
             },
             onData: {
-                (data:NSData?, string:String?)->() in
-                self.printLog(string!)
+                (string:NSString?)->() in
+                self.printLog(string! as String)
             },
-            logger: self
+            logger: self, commType: BLECommType.ProtocolComm
         )
         txtMsg.delegate = self
     }
@@ -75,7 +75,7 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
         return CBUUID(string:"fff0")
     }
     
-    func txCharacteristicsUUID() -> CBUUID {
+    func txCharacteristicsUUID() ->  CBUUID {
         return CBUUID(string:"fff1")
     }
     
