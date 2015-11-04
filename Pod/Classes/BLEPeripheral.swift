@@ -291,16 +291,13 @@ public class ProtocolBLEPeripheral: SimpleBLEPeripheral {
 
     override func onConnectionFinalized() {
         inSync = false
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.delegate.connectionFinalized()
-        })
     }
 
     func pingIn() {
         writeRawData(self.pingOutData)
-//        if (null != this.onSync) {
-//            this.onSync();
-//        }
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.delegate.connectionFinalized()
+        })
     }
 
     func pingOut() {

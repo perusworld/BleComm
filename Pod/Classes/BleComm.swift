@@ -49,8 +49,8 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
         logger.printLog("connectionFinalized")
         connectionStatus = .Connected
     }
-    
-    
+
+
     public func didEncounterError(error: NSString) {
         logger.printLog( "didEncounterError \(error as String)")
         
