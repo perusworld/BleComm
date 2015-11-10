@@ -17,10 +17,6 @@ pod "BleComm"
 ## Node.js implementation
 Looking to do communications betweeen your iOS app and your Node.js application running on say Raspberry PI, use [nodeblecomm](https://github.com/perusworld/nodeblecomm)
 
-## Author
-
-Saravana Perumal Shanmugam, saravanaperumal@msn.com
-
 ## License
 
 BleComm is available under the MIT license. See the LICENSE file for more info.
