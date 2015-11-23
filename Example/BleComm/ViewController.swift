@@ -44,7 +44,7 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
                 (string:NSString?)->() in
                 self.printLog(string! as String)
             },
-            logger: self, commType: BLECommType.ProtocolComm
+            logger: self
         )
         txtMsg.delegate = self
     }

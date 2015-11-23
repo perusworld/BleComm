@@ -7,11 +7,6 @@ public enum ConnectionStatus {
     case Connected
 }
 
-public enum BLECommType {
-    case Simple
-    case ProtocolComm
-}
-
 public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate {
     var centralManager : CBCentralManager!
     var currentPeripheral:BLEPeripheral?
@@ -21,7 +16,6 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
     var mxSize:Int!
     var logger:Logger!
     var deviceId: NSUUID!
-    var commType = BLECommType.Simple
 
     var connectionCallback:(()->())?
     var disconnectionCallback:(()->())?
@@ -83,7 +77,7 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
         return false
     }
     
-    public init(deviceId: NSUUID, serviceUUID:CBUUID, txUUID:CBUUID, rxUUID:CBUUID, onConnect connectionCallback:(()->())? = nil, onDisconnect disconnectionCallback:(()->())? = nil, onData dataCallback:((data:NSString?)->())? = nil, mxSize:Int?=100, logger:Logger?=DefaultLogger(), commType:BLECommType?=BLECommType.Simple) {
+    public init(deviceId: NSUUID, serviceUUID:CBUUID, txUUID:CBUUID, rxUUID:CBUUID, onConnect connectionCallback:(()->())? = nil, onDisconnect disconnectionCallback:(()->())? = nil, onData dataCallback:((data:NSString?)->())? = nil, mxSize:Int?=100, logger:Logger?=DefaultLogger()) {
         super.init()
         self.deviceId = deviceId
         self.sUUID = serviceUUID
@@ -95,7 +89,6 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
         self.disconnectionCallback = disconnectionCallback
         self.dataCallback = dataCallback
         self.logger = logger
-        self.commType = commType!
     }
     
     public func centralManagerDidUpdateState(central: CBCentralManager) {
@@ -121,11 +114,7 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
         if peripheral.state == CBPeripheralState.Connected || peripheral.state == CBPeripheralState.Connecting {
             centralManager!.cancelPeripheralConnection(peripheral)
         }
-        if (BLECommType.Simple == self.commType) {
-            currentPeripheral = SimpleBLEPeripheral(peripheral: peripheral, delegate: self, logger: logger)
-        } else {
-            currentPeripheral = ProtocolBLEPeripheral(peripheral: peripheral, delegate: self, logger: logger)
-        }
+        currentPeripheral = SimpleBLEPeripheral(peripheral: peripheral, delegate: self, logger: logger)
         centralManager!.connectPeripheral(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey: NSNumber(bool:true)])
         
     }
