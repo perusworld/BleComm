@@ -16,6 +16,7 @@ public protocol BLEPeripheral: Any {
     func didConnect()
     func currentPeripheral() -> CBPeripheral
     func writeRawData(data:NSData)
+    func features() -> [String]
 }
 
 public class SimpleBLEPeripheral: NSObject, CBPeripheralDelegate, BLEPeripheral {
@@ -28,7 +29,7 @@ public class SimpleBLEPeripheral: NSObject, CBPeripheralDelegate, BLEPeripheral 
     var txCharacteristic:CBCharacteristic?
     var knownServices:[CBService] = []
     var logger:Logger!
-    var features:[String] = []
+    var exposedFeatures:[String] = []
     
     init(peripheral:CBPeripheral, delegate:BLEPeripheralDelegate, logger:Logger?=DefaultLogger()){
         super.init()
@@ -41,6 +42,11 @@ public class SimpleBLEPeripheral: NSObject, CBPeripheralDelegate, BLEPeripheral 
     public func currentPeripheral() -> CBPeripheral {
         return self.currentPeri
     }
+
+    public func features() -> [String] {
+        return exposedFeatures
+    }
+
 
     public func didConnect() {
         if currentPeri.services != nil{
@@ -195,7 +201,7 @@ public class SimpleBLEPeripheral: NSObject, CBPeripheralDelegate, BLEPeripheral 
         }
 
         if (!found) {
-            features = ["simple"]
+            exposedFeatures = ["simple"]
             postFeatureDetection()
         }
 
@@ -225,19 +231,19 @@ public class SimpleBLEPeripheral: NSObject, CBPeripheralDelegate, BLEPeripheral 
             if let string = NSString(data: descriptor.value as! NSData, encoding:NSUTF8StringEncoding) {
                 logger.printLog( "descVal \(string)")
                 if (0 < string.length) {
-                    features = string.componentsSeparatedByString(",")
+                    exposedFeatures = string.componentsSeparatedByString(",")
                 } else {
-                    features = ["simple"]
+                    exposedFeatures = ["simple"]
                 }
             } else {
-                features = ["simple"]
+                exposedFeatures = ["simple"]
             }
             postFeatureDetection()
         }
     }
 
     func postFeatureDetection() {
-        if (features.contains("protocol")) {
+        if (exposedFeatures.contains("protocol")) {
             dataHandler = ProtocolDataHandler(self, delegate: self.delegate)
         } else {
             dataHandler = DataHandler(self, delegate: self.delegate)

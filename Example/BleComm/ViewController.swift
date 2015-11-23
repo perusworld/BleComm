@@ -33,12 +33,12 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
             txUUID: txCharacteristicsUUID(),
             rxUUID: rxCharacteristicsUUID(),
             onConnect:{
-                self.printLog("Connected");
-                self.btnConnect.setTitle("Disconnect", forState: UIControlState.Normal);
+                self.printLog("Connected \(self.bleComm!.features())")
+                self.btnConnect.setTitle("Disconnect", forState: UIControlState.Normal)
             },
             onDisconnect:{
                 self.printLog("Disconnect")
-                self.btnConnect.setTitle("Connect", forState: UIControlState.Normal);
+                self.btnConnect.setTitle("Connect", forState: UIControlState.Normal)
             },
             onData: {
                 (string:NSString?)->() in

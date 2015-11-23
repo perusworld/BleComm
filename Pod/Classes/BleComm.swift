@@ -145,6 +145,9 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
             centralManager!.cancelPeripheralConnection(currentPeripheral!.currentPeripheral())
         }
     }
-    
-    
+
+    public func features() -> [String] {
+        return currentPeripheral!.features()
+    }
+
 }
