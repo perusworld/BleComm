@@ -1,12 +1,11 @@
-source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
-target 'BleComm_Example', :exclusive => true do
+target 'BleComm_Example' do
   pod "BleComm", :path => "../"
 end
 
-target 'BleComm_Tests', :exclusive => true do
-  pod "BleComm", :path => "../"
+target 'BleComm_Tests' do
+    inherit! :search_paths
 
   
 end
