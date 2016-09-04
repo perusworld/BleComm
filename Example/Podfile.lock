@@ -1,5 +1,5 @@
 PODS:
-  - BleComm (0.5.0)
+  - BleComm (0.5.3)
 
 DEPENDENCIES:
   - BleComm (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  BleComm: 69979adefc6eac16020f5afea1770317238b0370
+  BleComm: cf6458c902a66135df88a3f3a239c843a1411768
 
 PODFILE CHECKSUM: 4d128652fdf8ec32a730785455f0c3e06755ffb8
 

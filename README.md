@@ -1,4 +1,10 @@
 # BleComm
+
+[![CI Status](http://img.shields.io/travis/perusworld/BleComm.svg?style=flat)](https://travis-ci.org/perusworld/BleComm)
+[![Version](https://img.shields.io/cocoapods/v/BleComm.svg?style=flat)](http://cocoapods.org/pods/BleComm)
+[![License](https://img.shields.io/cocoapods/l/BleComm.svg?style=flat)](http://cocoapods.org/pods/BleComm)
+[![Platform](https://img.shields.io/cocoapods/p/BleComm.svg?style=flat)](http://cocoapods.org/pods/BleComm)
+
 A Simple iOS BLE Communication Library as CocoaPod
 
 ## Usage
