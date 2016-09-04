@@ -14,7 +14,6 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		7CFC583B63521D9071B244A0 /* Pods_BleComm_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BE9C62429085F0536A830A7 /* Pods_BleComm_Tests.framework */; };
 		9C9F7D5DA2771CAC9CD96274 /* Pods_BleComm_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C72788FD47E00F917C78C86 /* Pods_BleComm_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,7 +28,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		04683AF8B815E01164EF7644 /* Pods-BleComm_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BleComm_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BleComm_Tests/Pods-BleComm_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		0595BAFA9A5325F03D0BFB72 /* BleComm.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = BleComm.podspec; path = ../BleComm.podspec; sourceTree = "<group>"; };
 		19D23073AAE7ECE2ED08E93C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		3B4B7184445FCF32408371B1 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -48,7 +46,6 @@
 		8C72788FD47E00F917C78C86 /* Pods_BleComm_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BleComm_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9940BD63CEE06A8731701285 /* Pods-BleComm_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BleComm_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BleComm_Example/Pods-BleComm_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B99B4EA8440B4EA297A9CCF1 /* Pods-BleComm_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BleComm_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-BleComm_Example/Pods-BleComm_Example.release.xcconfig"; sourceTree = "<group>"; };
-		C8B2AA635AC4C46902C7C03B /* Pods-BleComm_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BleComm_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BleComm_Tests/Pods-BleComm_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +61,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CFC583B63521D9071B244A0 /* Pods_BleComm_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,8 +81,6 @@
 			children = (
 				9940BD63CEE06A8731701285 /* Pods-BleComm_Example.debug.xcconfig */,
 				B99B4EA8440B4EA297A9CCF1 /* Pods-BleComm_Example.release.xcconfig */,
-				04683AF8B815E01164EF7644 /* Pods-BleComm_Tests.debug.xcconfig */,
-				C8B2AA635AC4C46902C7C03B /* Pods-BleComm_Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -516,7 +510,6 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 04683AF8B815E01164EF7644 /* Pods-BleComm_Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -537,7 +530,6 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C8B2AA635AC4C46902C7C03B /* Pods-BleComm_Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (

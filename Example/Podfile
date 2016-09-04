@@ -3,9 +3,3 @@ use_frameworks!
 target 'BleComm_Example' do
   pod "BleComm", :path => "../"
 end
-
-target 'BleComm_Tests' do
-    inherit! :search_paths
-
-  
-end
