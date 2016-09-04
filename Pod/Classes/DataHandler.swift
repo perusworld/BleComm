@@ -129,7 +129,7 @@ public class ProtocolDataHandler : DataHandler {
         if (self.dataLength < string.length) {
             var toIndex = 0
             var dataMarker = self.ChunkedData
-            for (var index = 0; index < string.length; index = index + self.dataLength) {
+            for index in (0..<string.length) where index % self.dataLength == 0 {
                 let data:NSMutableData = NSMutableData()
                 toIndex = min(index + self.dataLength, string.length)
                 let chunk = string.substringWithRange(NSRange(location:index, length:toIndex-index)) as NSString

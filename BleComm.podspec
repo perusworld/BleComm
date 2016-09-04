@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "BleComm"
-  s.version          = "0.4.1"
+  s.version          = "0.5.0"
   s.summary          = "Simple BLE Communction Library"
 
 # This description is used to generate tags and improve search results.
@@ -31,9 +31,6 @@ A Simple iOS BLE Communication Library as CocoaPod
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'
-  s.resource_bundles = {
-    'BleComm' => ['Pod/Assets/*.png']
-  }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

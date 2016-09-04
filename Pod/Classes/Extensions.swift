@@ -36,7 +36,6 @@ public extension NSData {
     func hexArray()->[String] {
         var ret = [String]()
         let dataLength:Int = self.length
-        let string = NSMutableString(capacity: dataLength*2)
         let dataBytes = UnsafePointer<UInt8>(self.bytes)
         for idx in 0..<dataLength {
             ret.append(String(format:"%02x", arguments: [dataBytes[idx]]))
