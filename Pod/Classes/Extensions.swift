@@ -1,7 +1,7 @@
 import Foundation
 import CoreBluetooth
 
-extension NSData {
+public extension NSData {
     
     func hexRepresentationWithSpaces(spaces:Bool) ->NSString {
         
@@ -24,14 +24,26 @@ extension NSData {
         
         let dataLength:Int = self.length
         let string = NSMutableString(capacity: dataLength*2)
-        let dataBytes:UnsafePointer<Void> = self.bytes
+        let dataBytes = UnsafePointer<UInt8>(self.bytes)
         for idx in 0..<dataLength {
-            string.appendFormat("%02x", [UInt(dataBytes[idx])] )
+            //print(dataBytes[idx])
+            string.appendFormat("%02x", dataBytes[idx])
         }
         
         return string as String
     }
     
+    func hexArray()->[String] {
+        var ret = [String]()
+        let dataLength:Int = self.length
+        let string = NSMutableString(capacity: dataLength*2)
+        let dataBytes = UnsafePointer<UInt8>(self.bytes)
+        for idx in 0..<dataLength {
+            ret.append(String(format:"%02x", arguments: [dataBytes[idx]]))
+        }
+        
+        return ret
+    }
     
     func stringRepresentation()->String {
         let dataLength:Int = self.length
@@ -44,7 +56,7 @@ extension NSData {
                 if (data[index] != 0x9)       //0x9 == TAB
                     && (data[index] != 0xa)   //0xA == NL
                     && (data[index] != 0xd) { //0xD == CR
-                        data[index] = 0xA9
+                    data[index] = 0xA9
                 }
                 
             }
@@ -59,7 +71,7 @@ extension NSData {
 }
 
 
-extension NSString {
+public extension NSString {
     
     func toHexSpaceSeparated() ->NSString {
         
@@ -87,9 +99,37 @@ extension NSString {
     
 }
 
+public extension String {
+    
+    func subStr(from:Int, to: Int) ->String {
+        let start = self.startIndex.advancedBy(from)
+        let end = self.startIndex.advancedBy(to)
+        let range = start..<end
+        return self.substringWithRange(range)
+    }
+    
+    func hexInt(from:Int, to: Int) ->Int {
+        let value = self.subStr(from, to: to)
+        var outVal: CUnsignedInt = 0
+        let scanner: NSScanner = NSScanner(string: value)
+        scanner.scanHexInt(&outVal)
+        return Int(outVal)
+    }
+    
+    func hexByteArray() ->[UInt8] {
+        var ret = [UInt8]()
+        var index = 0
+        while index + 2 <= characters.count {
+            ret.append(UInt8(self.hexInt(index, to: index+2)))
+            index += 2
+        }
+        return ret
+    }
+    
+}
 
 
-extension CBUUID {
+public extension CBUUID {
     
     func representativeString() ->NSString{
         
@@ -152,7 +192,7 @@ public class DefaultLogger : Logger {
     public func printLog(logString:String) {
         print(logString)
     }
-
+    
 }
 
 func binaryforByte(value: UInt8) -> String {

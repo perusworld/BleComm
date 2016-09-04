@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		55D2D5161BB3704D0017FF4D /* BLETableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D2D5151BB3704D0017FF4D /* BLETableViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		55D2D5161BB3704D0017FF4D /* BLETableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D2D5151BB3704D0017FF4D /* BLETableViewController.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -169,12 +169,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "BleComm_Example" */;
 			buildPhases = (
-				7134380D8EC7E75E019713C6 /* Check Pods Manifest.lock */,
+				7134380D8EC7E75E019713C6 /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				9B50452FB83BD3B9F0F15026 /* Embed Pods Frameworks */,
-				8DB585EE3E67DDC2ECFC7B74 /* Copy Pods Resources */,
+				9B50452FB83BD3B9F0F15026 /* [CP] Embed Pods Frameworks */,
+				8DB585EE3E67DDC2ECFC7B74 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -189,12 +189,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "BleComm_Tests" */;
 			buildPhases = (
-				8321995083ED6B4BAEA32A6D /* Check Pods Manifest.lock */,
+				8321995083ED6B4BAEA32A6D /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
-				16EC3A52FA7B7B424D8E2860 /* Embed Pods Frameworks */,
-				8C7CEEE425EB278F5E20E35B /* Copy Pods Resources */,
+				16EC3A52FA7B7B424D8E2860 /* [CP] Embed Pods Frameworks */,
+				8C7CEEE425EB278F5E20E35B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -265,14 +265,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		16EC3A52FA7B7B424D8E2860 /* Embed Pods Frameworks */ = {
+		16EC3A52FA7B7B424D8E2860 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,14 +280,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BleComm_Tests/Pods-BleComm_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7134380D8EC7E75E019713C6 /* Check Pods Manifest.lock */ = {
+		7134380D8EC7E75E019713C6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,14 +295,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		8321995083ED6B4BAEA32A6D /* Check Pods Manifest.lock */ = {
+		8321995083ED6B4BAEA32A6D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -310,14 +310,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		8C7CEEE425EB278F5E20E35B /* Copy Pods Resources */ = {
+		8C7CEEE425EB278F5E20E35B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,14 +325,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BleComm_Tests/Pods-BleComm_Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8DB585EE3E67DDC2ECFC7B74 /* Copy Pods Resources */ = {
+		8DB585EE3E67DDC2ECFC7B74 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,14 +340,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BleComm_Example/Pods-BleComm_Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9B50452FB83BD3B9F0F15026 /* Embed Pods Frameworks */ = {
+		9B50452FB83BD3B9F0F15026 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

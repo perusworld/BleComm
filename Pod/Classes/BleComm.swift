@@ -16,10 +16,10 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
     var mxSize:Int!
     var logger:Logger!
     var deviceId: NSUUID!
-
+    
     var connectionCallback:(()->())?
     var disconnectionCallback:(()->())?
-    var dataCallback:((string:NSString?)->())?
+    var dataCallback:((string:NSString?, rawData: NSData?)->())?
     
     public private(set) var connectionStatus:ConnectionStatus = ConnectionStatus.Disconnected {
         didSet {
@@ -34,17 +34,17 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
         }
     }
     
-    public func didReceiveData(string: NSString) {
+    public func didReceiveData(string: NSString, rawData: NSData) {
         logger.printLog("didReceiveData \(string)")
-        dataCallback?(string: string)
+        dataCallback?(string: string, rawData: rawData)
     }
     
     public func connectionFinalized() {
         logger.printLog("connectionFinalized")
         connectionStatus = .Connected
     }
-
-
+    
+    
     public func didEncounterError(error: NSString) {
         logger.printLog( "didEncounterError \(error as String)")
         
@@ -77,7 +77,18 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
         return false
     }
     
-    public init(deviceId: NSUUID, serviceUUID:CBUUID, txUUID:CBUUID, rxUUID:CBUUID, onConnect connectionCallback:(()->())? = nil, onDisconnect disconnectionCallback:(()->())? = nil, onData dataCallback:((data:NSString?)->())? = nil, mxSize:Int?=100, logger:Logger?=DefaultLogger()) {
+    public func writeData(data:NSData) -> Bool
+    {
+        if let currentPeripheral = self.currentPeripheral {
+            if connectionStatus == .Connected {
+                currentPeripheral.writeRawData(data)
+                return true
+            }
+        }
+        return false
+    }
+    
+    public init(deviceId: NSUUID, serviceUUID:CBUUID, txUUID:CBUUID, rxUUID:CBUUID, onConnect connectionCallback:(()->())? = nil, onDisconnect disconnectionCallback:(()->())? = nil, onData dataCallback:((data:NSString?, rawData:NSData?)->())? = nil, mxSize:Int?=100, logger:Logger?=DefaultLogger()) {
         super.init()
         self.deviceId = deviceId
         self.sUUID = serviceUUID
@@ -145,9 +156,9 @@ public class BLEComm : NSObject, CBCentralManagerDelegate, BLEPeripheralDelegate
             centralManager!.cancelPeripheralConnection(currentPeripheral!.currentPeripheral())
         }
     }
-
+    
     public func features() -> [String] {
         return currentPeripheral!.features()
     }
-
+    
 }

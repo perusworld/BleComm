@@ -5,37 +5,40 @@
 import Foundation
 
 public class DataHandler {
-
+    
     var peripheral:BLEPeripheral
     var delegate:BLEPeripheralDelegate
-
+    
     init(_ peripheral:BLEPeripheral, delegate:BLEPeripheralDelegate) {
         self.peripheral = peripheral
         self.delegate = delegate
     }
-
+    
     func writeRawData(data:NSData) {
         peripheral.writeRawData(data)
     }
-
+    
     public func onConnectionFinalized() {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.delegate.connectionFinalized()
         })
     }
-
+    
     public func onData(newData: NSData) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            let string = NSString(data: newData, encoding:NSUTF8StringEncoding)
-            self.delegate.didReceiveData(string!)
+            var string = NSString(data: newData, encoding:NSUTF8StringEncoding)
+            if (nil == string) {
+                string = ""
+            }
+            self.delegate.didReceiveData(string!, rawData: newData)
         })
     }
-
+    
     public func writeString(string:NSString){
         let data = NSData(bytes: string.UTF8String, length: string.length)
         writeRawData(data)
     }
-
+    
 }
 
 public class ProtocolDataHandler : DataHandler {
@@ -52,34 +55,34 @@ public class ProtocolDataHandler : DataHandler {
     let dataLength = 100 - 3
     var inSync: Bool = false
     var chunkedDataBuffer: NSMutableData!
-
+    
     override init(_ peripheral:BLEPeripheral, delegate:BLEPeripheralDelegate) {
         super.init(peripheral, delegate: delegate)
     }
-
+    
     public override func onConnectionFinalized() {
         inSync = false
     }
-
+    
     func pingIn() {
         writeRawData(self.pingOutData)
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.delegate.connectionFinalized()
         })
     }
-
+    
     func pingOut() {
         //noop
     }
-
+    
     func onDataPacket(data: NSData) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             let string = NSString(data: data, encoding:NSUTF8StringEncoding)
-            self.delegate.didReceiveData(string!)
+            self.delegate.didReceiveData(string!, rawData: data)
         })
     }
-
-
+    
+    
     public override func onData(newData: NSData) {
         var data = [UInt8](count: newData.length, repeatedValue: 0)
         let len = newData.length
@@ -121,7 +124,7 @@ public class ProtocolDataHandler : DataHandler {
             }
         }
     }
-
+    
     public override func writeString(string:NSString){
         if (self.dataLength < string.length) {
             var toIndex = 0
@@ -144,6 +147,6 @@ public class ProtocolDataHandler : DataHandler {
             writeRawData(data)
         }
     }
-
-
+    
+    
 }

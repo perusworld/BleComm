@@ -2,7 +2,7 @@ import Foundation
 import CoreBluetooth
 
 public protocol BLEPeripheralDelegate: Any {
-    func didReceiveData(newData:NSString)
+    func didReceiveData(newData:NSString, rawData: NSData)
     func connectionFinalized()
     func didEncounterError(error:NSString)
     func serviceUUID() -> CBUUID
@@ -38,16 +38,16 @@ public class SimpleBLEPeripheral: NSObject, CBPeripheralDelegate, BLEPeripheral 
         self.delegate = delegate
         self.logger = logger
     }
-
+    
     public func currentPeripheral() -> CBPeripheral {
         return self.currentPeri
     }
-
+    
     public func features() -> [String] {
         return exposedFeatures
     }
-
-
+    
+    
     public func didConnect() {
         if currentPeri.services != nil{
             logger.printLog( "didConnect Skipping service discovery")
@@ -167,8 +167,11 @@ public class SimpleBLEPeripheral: NSObject, CBPeripheralDelegate, BLEPeripheral 
             case delegate.rxUUID():
                 logger.printLog("didDiscoverCharacteristicsForService \(service.description) : RX")
                 rxCharacteristic = chr
+                if (delegate.rxUUID().isEqual(delegate.txUUID())) {
+                    logger.printLog("didDiscoverCharacteristicsForService \(service.description) : TX")
+                    txCharacteristic = chr
+                }
                 peripheral.setNotifyValue(true, forCharacteristic: rxCharacteristic!)
-                peripheral.discoverDescriptorsForCharacteristic(rxCharacteristic!)
                 break
             case delegate.txUUID():
                 logger.printLog("didDiscoverCharacteristicsForService \(service.description) : TX")
@@ -181,7 +184,14 @@ public class SimpleBLEPeripheral: NSObject, CBPeripheralDelegate, BLEPeripheral 
         }
         
     }
-
+    
+    public func peripheral(peripheral: CBPeripheral, didUpdateNotificationStateForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+        print("Peripheral#didUpdateNotificationStateForCharacteristic error: \(error)")
+        if (nil == error) {
+            peripheral.discoverDescriptorsForCharacteristic(rxCharacteristic!)
+        }
+    }
+    
     public func peripheral(peripheral: CBPeripheral, didDiscoverDescriptorsForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
         var found = false
         if error != nil {
@@ -199,12 +209,12 @@ public class SimpleBLEPeripheral: NSObject, CBPeripheralDelegate, BLEPeripheral 
                 }
             }
         }
-
+        
         if (!found) {
             exposedFeatures = ["simple"]
             postFeatureDetection()
         }
-
+        
     }
     
     public func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
@@ -219,14 +229,14 @@ public class SimpleBLEPeripheral: NSObject, CBPeripheralDelegate, BLEPeripheral 
             onData(characteristic.value!)
         }
     }
-
+    
     public func peripheral(peripheral: CBPeripheral, didUpdateValueForDescriptor descriptor: CBDescriptor, error: NSError?) {
         logger.printLog( "desc \(descriptor.value)")
         if error != nil {
             logger.printLog( "didUpdateValueForDescriptor \(error.debugDescription)")
             return
         }
-
+        
         if (fUUID == descriptor.UUID){
             if let string = NSString(data: descriptor.value as! NSData, encoding:NSUTF8StringEncoding) {
                 logger.printLog( "descVal \(string)")
@@ -241,24 +251,24 @@ public class SimpleBLEPeripheral: NSObject, CBPeripheralDelegate, BLEPeripheral 
             postFeatureDetection()
         }
     }
-
+    
     func postFeatureDetection() {
         if (exposedFeatures.contains("protocol")) {
             dataHandler = ProtocolDataHandler(self, delegate: self.delegate)
         } else {
             dataHandler = DataHandler(self, delegate: self.delegate)
         }
-
+        
         if rxCharacteristic != nil && txCharacteristic != nil {
             dataHandler!.onConnectionFinalized()
         }
-
+        
     }
-
+    
     func onData(newData: NSData) {
         dataHandler!.onData(newData)
     }
-
+    
     public func peripheral(peripheral: CBPeripheral, didDiscoverIncludedServicesForService service: CBService, error: NSError?) {
         
         if error != nil {
@@ -276,13 +286,13 @@ public class SimpleBLEPeripheral: NSObject, CBPeripheralDelegate, BLEPeripheral 
     
     
     public func handleError(errorString:String) {
-
+        
         logger.printLog("Error \(errorString)")
-
+        
         dispatch_async(dispatch_get_main_queue(), {
             () -> Void in
             self.delegate.didEncounterError(errorString)
         })
-
+        
     }
 }

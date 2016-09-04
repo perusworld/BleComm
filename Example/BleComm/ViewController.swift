@@ -11,7 +11,7 @@ import CoreBluetooth
 import BleComm
 
 class ViewController: UIViewController, Logger, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
-
+    
     @IBOutlet weak var txtMsg: UITextField!
     @IBOutlet weak var btnConnect: UIButton!
     @IBOutlet weak var tblLogs: UITableView!
@@ -22,7 +22,7 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
     var deviceId : NSUUID!
     
     let textCellIdentifier = "TextCell"
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tblLogs.delegate = self
@@ -41,7 +41,7 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
                 self.btnConnect.setTitle("Connect", forState: UIControlState.Normal)
             },
             onData: {
-                (string:NSString?)->() in
+                (string:NSString?, rawData: NSData?)->() in
                 self.printLog(string! as String)
             },
             logger: self
@@ -52,7 +52,7 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
     override func viewWillDisappear(animated: Bool) {
         bleComm!.disconnect()
     }
-
+    
     @IBAction func connectDisconnect(sender: UIButton) {
         if ("Disconnect" == sender.titleLabel!.text) {
             self.printLog("Going to disconnect");
@@ -70,7 +70,7 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     func demoServiceUUID() -> CBUUID {
         return CBUUID(string:"fff0")
     }
@@ -82,7 +82,7 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
     func rxCharacteristicsUUID() -> CBUUID {
         return CBUUID(string:"fff2")
     }
-
+    
     func printLog(obj:AnyObject, funcName:String) {
         logs.insert("\(funcName) \(obj.classForCoder?.description()) ", atIndex: 0);
         tblLogs.reloadData()
@@ -97,7 +97,7 @@ class ViewController: UIViewController, Logger, UITableViewDataSource, UITableVi
         logs.insert(logString, atIndex: 0)
         tblLogs.reloadData()
     }
-
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

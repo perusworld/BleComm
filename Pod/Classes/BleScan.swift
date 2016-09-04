@@ -21,7 +21,7 @@ public class BLEScan : NSObject, CBCentralManagerDelegate {
     public func centralManagerDidUpdateState(central: CBCentralManager) {
         if central.state == .PoweredOn {
             central.scanForPeripheralsWithServices([sUUID], options: nil)
-            timout = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "stopScanning", userInfo: nil, repeats: false)
+            timout = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(BLEScan.stopScanning), userInfo: nil, repeats: false)
             logger.printLog("Searching for BLE Devices")
         } else if central.state == .PoweredOff {
             logger.printLog("Powered off")
